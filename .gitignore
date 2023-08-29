@@ -6,6 +6,7 @@ pepper_logs/
 #Logs:
 runinfo
 nohup.out
+.gitignore
 
 #pycache:
 __pycache__
