@@ -1,0 +1,26 @@
+#Dir
+*output/
+pepper_logs/
+
+
+#Logs:
+runinfo
+nohup.out
+
+#pycache:
+__pycache__
+*.pyc
+yian.cc
+
+#Output columns/histograms:
+*.hdf5
+hists
+*.coffea
+
+#Input data directory (which is it's own git repo):
+data
+
+*.buildconfig
+
+#pip:
+pepper.egg-info

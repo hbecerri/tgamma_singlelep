@@ -1,0 +1,133 @@
+{
+
+    "year": "ul2018",
+    "datadir": ".",
+    "store": "/nfs/dust/cms/user/yian/topgamma",
+    "rng_seed_file": "$CONFDIR/seed.txt",
+    "compute_systematics": true,
+    "lumimask": "$CONFDIR/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt",
+    "luminosity": 59.74,
+    "split_pdf_uncs":true,
+    "crosssections": "$CONFDIR/crosssections.json",
+    "pdf_types": {
+    "91400": "Hessian",
+    "325300": "Hessian",
+    "325500": "Hessian",
+    "306000": "Hessian"
+    },
+    "exp_datasets": {
+        "SingleMuon": [
+            "/SingleMuon/Run2018C-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+        ],
+        "EGamma": [
+        "/EGamma/Run2018C-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
+        ],
+
+    },
+    "mc_datasets": {
+        "TGJets_TuneCP5_13TeV-amcatnlo-madspin-pythia8": [
+            "/TGJets_TuneCP5_13TeV-amcatnlo-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
+        ],
+        "TGJets_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8":[
+	   "/TGJets_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+        ]
+    },
+    "dataset_for_systematics": {
+    },
+    "dataset_trigger_order": [
+        "MuonEG",
+        "DoubleMuon",
+        "EGamma",
+        "SingleMuon"
+    ],
+    "dataset_trigger_map": {
+        "MuonEG": [
+            "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
+            "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
+            "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL",
+            "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ",
+            "HLT_Mu27_Ele37_CaloIdL_MW",
+            "HLT_Mu37_Ele27_CaloIdL_MW"
+        ],
+        "SingleMuon": [
+            "HLT_IsoMu24"
+        ],
+        "DoubleMuon": [
+            "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8"
+        ],
+        "EGamma": [
+            "HLT_Ele32_WPTight_Gsf",
+            "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL",
+            "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"
+        ]
+    },
+
+    "data_eras": {
+        "2018A": [315252, 316995],
+        "2018B": [316998, 319312],
+        "2018C": [319313, 320393],
+        "2018D": [320394, 325273]
+    },
+
+    "column_output_format": "root",
+    "columns_to_save": [
+        [
+	    "Lepton",
+            ["pt", "eta", "phi", "mass"]
+	],
+	[
+	    "Jet",
+	    ["pt", "eta", "phi", "mass"]
+	],
+	[
+	    "Jet",
+	    "btagged"
+	],
+	[
+	    "MCweight",
+	    "weight"
+	],
+
+	[
+	    "MET",
+	    ["pt", "phi"]
+	]
+    ],
+    "apply_met_filters": true,
+    "mc_lumifactors": "$CONFDIR/mc_lumi_factors_2018.json"
+
+    "ele_eta_min": -2.5,
+    "ele_eta_max": 2.5,
+    "good_ele_pt_min": 20.0,
+    "veto_ele_pt_min": 10.0,
+
+    "muon_eta_min": -2.4,
+    "muon_eta_max": 2.4,
+    "good_muon_pt_min": 20.0,
+    "veto_muon_pt_min": 10,
+
+    "good_jet_id": "cut:tight",
+    "good_jet_puId": "cut:loose",
+    "good_jet_lepton_distance": 0.4,
+    "good_jet_photon_distance": 0.4,
+    "good_jet_eta_min": -2.4,
+    "good_jet_eta_max": 2.4,
+    "good_jet_pt_min": 30,
+    "jet_pt_min": [
+	    30,
+            30
+    ],
+    "num_jets_atleast":2,
+
+    "btag": "deepjet:medium",
+    "num_atleast_btagged": 1,
+
+    "hem_cut_if_ele": false,
+    "hem_cut_if_muon": false,
+    "hem_cut_if_jet": false,
+
+    "met_min_met": 20,
+
+    "hists": "$CONFDIR/test_histograms.json",
+}
+
