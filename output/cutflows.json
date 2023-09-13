@@ -1,0 +1,28 @@
+{
+    "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8": {
+        "all": {
+            "Before cuts": 384518401.48620605,
+            "Trigger": 149276708.83895874,
+            "MET filters": 149192982.03048706,
+            "oneLepton": 128878310.08804321,
+            "atLeastOnePhoton": 883681.8589782715,
+            "atLeast2jets": 817853.1726074219,
+            "Req MET": 741406.9561767578,
+            "atLeast1bjet": 627040.9895324707
+        },
+        "muon": {
+            "oneLepton": 75797030.30700684,
+            "atLeastOnePhoton": 524809.342956543,
+            "atLeast2jets": 486282.87673950195,
+            "Req MET": 440172.4604797363,
+            "atLeast1bjet": 374343.7741088867
+        },
+        "ele": {
+            "oneLepton": 53081279.78103638,
+            "atLeastOnePhoton": 358872.5160217285,
+            "atLeast2jets": 331570.2958679199,
+            "Req MET": 301234.4956970215,
+            "atLeast1bjet": 252697.21542358398
+        }
+    }
+}

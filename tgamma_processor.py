@@ -11,8 +11,24 @@
 import pepper
 import awkward as ak
 from functools import partial
+import math
+import numpy as np
+from coffea.nanoevents.methods import vector
+from pepper import utils
+from pepper.utils import pxpypz_from_ptetaphi
+import pepper.top_reco as top_reco
+import sys
+np.set_printoptions(threshold=sys.maxsize)
 
+def xyzE(pt,eta,phi,mass):
 
+        pt = abs(pt)
+        px = pt*np.cos(phi)
+        py = pt*np.sin(phi)
+        pz = pt*np.sinh(eta)
+        E = np.sqrt(px**2 + py**2 + pz**2 + mass**2)
+        return px, py, pz, E
+  
 # All processors should inherit from pepper.ProcessorBasicPhysics
 class Processor(pepper.ProcessorBasicPhysics):
     # We use the ConfigTTbarLL instead of its base Config, to use some of its
@@ -35,7 +51,6 @@ class Processor(pepper.ProcessorBasicPhysics):
     def process_selection(self, selector, dsname, is_mc, filler):
         # Implement the selection steps: add cuts, define objects and/or
         # compute event weights
-
         # Add a cut only allowing events according to the golden JSON
         # The good_lumimask method is specified in pepper.ProcessorBasicPhysics
         # It also requires a lumimask to be specified in config
@@ -43,6 +58,10 @@ class Processor(pepper.ProcessorBasicPhysics):
         if not is_mc:
             selector.add_cut("Lumi", partial(
                 self.good_lumimask, is_mc, dsname))
+
+        #        if is_mc:
+        #            selector.set_column("GenNeutrino", partial(self.build_genneutrino_column, is_mc))
+
 
         # Only allow events that pass triggers specified in config
         # This also takes into account a trigger order to avoid triggering
@@ -109,7 +128,34 @@ class Processor(pepper.ProcessorBasicPhysics):
 #        selector.set_cat("jet_btag", {"j2+_b0", "j2_b1", "j3+_b1", "j2_b2+", "j3+_b2+"})
 #        selector.set_multiple_columns(self.btag_categories)
 
-        
+        #ttbar semileptnic reconstruction
+        selector.set_column("Neutrino1",self.neutrino_reco)  
+        #selector.set_column("Top", self.ttbar_reco)
+#        selector.set_multiple_columns(self.ttbar_reco)
+        topVars = top_reco.topreco(selector.data)
+
+        selector.set_column("tophad_m", topVars["mtophad"])           
+        selector.set_column("tophad_pt", topVars["pttophad"])
+        selector.set_column("tophad_eta", topVars["etatophad"])
+        selector.set_column("tophad_phi", topVars["phitophad"])
+
+        selector.set_column("toplep_m",   topVars["mtoplep"])
+        selector.set_column("toplep_pt",  topVars["pttoplep"])
+        selector.set_column("toplep_eta", topVars["etatoplep"])
+        selector.set_column("toplep_phi", topVars["phitoplep"])
+
+        chi2_flat =  [y for x in topVars["chisquare"] for y in x]
+        chi2 = [i for i in chi2_flat if i is not None] 
+        selector.set_column("chi2",chi2)       
+
+        selector.set_column("GenTopPos", self.gentoppos)
+        selector.set_column("GenTopNeg", self.gentopneg)
+
+        charge = ak.concatenate(
+            [selector.data["Electron"].charge, selector.data["Muon"].charge], axis=1)
+        selector.set_column("Lepton_charge", charge)
+ 
+  
     def pick_electrons(self, data):
         ele = data["Electron"]
 
@@ -322,4 +368,94 @@ class Processor(pepper.ProcessorBasicPhysics):
         # We only want events with excatly two leptons, thus look at our
         # electron and muon counts and pick events accordingly
         return ak.num(data["Electron"]) + ak.num(data["Muon"]) == 2
-    
+   
+    def neutrino_reco(self,data):
+
+        met = data["MET"]  
+        lepton = data["Lepton"][:,0] 
+        pxl, pyl, pzl = pxpypz_from_ptetaphi(lepton.pt, lepton.eta, lepton.phi)
+        pxnu, pynu, pznu = pxpypz_from_ptetaphi(met.pt, lepton.eta, met.phi)        
+     
+        Enu = pxnu**2 + pynu**2
+ 
+        mWT = np.sqrt((lepton.pt + met.pt)**2 - (pxl + pxnu)**2 -
+                  (pyl + pynu)**2)        
+ 
+        mW = ak.Array(np.full(len(mWT), 80.4, dtype=float))
+        mask_mWT_GT_mW = mWT > mW
+   
+        dummy_mask = ak.full_like(mask_mWT_GT_mW, True)
+        mask_mWT_GT_mW = ak.singletons(ak.mask(mask_mWT_GT_mW, dummy_mask))
+        pxnu = ak.singletons(ak.mask(pxnu, dummy_mask))
+        pynu = ak.singletons(ak.mask(pynu, dummy_mask))
+        pznu = ak.singletons(ak.mask(pznu, dummy_mask))
+        ptW = ak.singletons(ak.mask(lepton.pt, dummy_mask))
+        pxl = ak.singletons(ak.mask(pxl, dummy_mask))
+        pyl = ak.singletons(ak.mask(pyl, dummy_mask))
+        pzl = ak.singletons(ak.mask(pzl, dummy_mask))   
+ 
+        k = met.pt * lepton.pt - pxnu * pxl - pynu * pyl
+
+        k = ak.fill_none(ak.pad_none(k[k > 0.0001], 1), 0.0001)
+        scf = 0.5 * (mW * mW) / k
+        pxnu = ak.concatenate([pxnu[mask_mWT_GT_mW] * scf[mask_mWT_GT_mW],
+                           pxnu[~mask_mWT_GT_mW]], axis=1)
+        pynu = ak.concatenate([pynu[mask_mWT_GT_mW] * scf[mask_mWT_GT_mW],
+                           pynu[~mask_mWT_GT_mW]], axis=1)
+        Etnu = np.sqrt(pxnu**2 + pynu**2)
+
+        Lambda = (mW**2)/2. + pxl * pxnu + pyl * pynu
+        discr = ((Lambda * pzl)**2)/(ptW**4) - (((lepton.energy * Etnu)**2) -
+                                            (Lambda**2))/(ptW**2) 
+
+        mask_posDiscr = discr > 0
+  
+        sol = Lambda * pzl/(lepton.pt * lepton.pt)
+        pxnu_neg = pxnu[~mask_posDiscr]
+        pynu_neg = pynu[~mask_posDiscr]
+        pznu_neg = sol[~mask_posDiscr]
+        Enu_neg = np.sqrt(pxnu_neg**2 + pynu_neg**2 + pznu_neg**2)
+ 
+        sol1 = (
+            Lambda[mask_posDiscr] * pzl[mask_posDiscr]/(ptW[mask_posDiscr]**2) +
+            np.sqrt(discr[mask_posDiscr])
+        )
+        sol2 = (
+            Lambda[mask_posDiscr] * pzl[mask_posDiscr]/(ptW[mask_posDiscr]**2) -
+            np.sqrt(discr[mask_posDiscr])
+        )
+
+        pxnu_pos = ak.concatenate([pxnu[mask_posDiscr],
+                              pxnu[mask_posDiscr]], axis=1)
+        pynu_pos = ak.concatenate([pynu[mask_posDiscr],
+                               pynu[mask_posDiscr]], axis=1)
+        pznu_pos = ak.concatenate([sol1, sol2], axis=1)
+        Enu_pos = np.sqrt(pxnu_pos**2 + pynu_pos**2 + pznu_pos**2)
+
+        pxnu = ak.concatenate([pxnu_pos, pxnu_neg], axis=1)
+        pynu = ak.concatenate([pynu_pos, pynu_neg], axis=1)
+        pznu = ak.concatenate([pznu_pos, pznu_neg], axis=1)
+        Enu = ak.concatenate([Enu_pos, Enu_neg], axis=1)
+  
+        mnu2 = np.minimum(10e20, np.maximum((Enu*Enu - (pxnu*pxnu + pynu*pynu + pznu*pznu)), 0))
+        mnu = np.sqrt(mnu2)
+        ptnu = np.hypot(pxnu, pynu)
+        phinu = np.arctan2(pynu, pxnu)
+        etanu = np.arcsinh(pznu/ptnu)
+        neutrinos = ak.zip({"pt": ptnu, "eta": etanu, "phi": phinu, "mass": mnu},
+                       with_name="PtEtaPhiMLorentzVector")
+        return neutrinos
+
+    def gentoppos(self, data):
+        part = data["GenPart"]
+        part = part[~ak.is_none(part.parent, axis=1)]
+        part = part[part.hasFlags("isLastCopy")]
+        part = part[(part.pdgId) == 6]
+        return part
+
+    def gentopneg(self, data):
+        part = data["GenPart"]
+        part = part[~ak.is_none(part.parent, axis=1)]
+        part = part[part.hasFlags("isLastCopy")]
+        part = part[(part.pdgId) == -6]
+        return part

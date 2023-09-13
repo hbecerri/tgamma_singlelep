@@ -2,7 +2,7 @@
 
     "year": "ul2018",
     "datadir": ".",
-    "store": "/nfs/dust/cms/user/yian/topgamma",
+    "store": "/pnfs/desy.de/cms/tier2/store",
     "rng_seed_file": "$CONFDIR/seed.txt",
     "compute_systematics": true,
     "lumimask": "$CONFDIR/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt",
@@ -25,6 +25,9 @@
 
     },
     "mc_datasets": {
+        "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8": [
+            "/pnfs/desy.de/cms/tier2/store/mc/RunIISummer20UL18NanoAODv9/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/130000/D7B4AF21-1AD9-7E44-9E2B-883E31BBA446.root", 
+        ], 
         "TGJets_TuneCP5_13TeV-amcatnlo-madspin-pythia8": [
             "/TGJets_TuneCP5_13TeV-amcatnlo-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
         ],
@@ -75,6 +78,36 @@
 	    "Lepton",
             ["pt", "eta", "phi", "mass"]
 	],
+        [
+            "Lepton_charge"
+        ],
+        [
+            "tophad_m"
+        ],
+        [
+            "tophad_pt"
+        ],
+        [
+            "tophad_eta"
+        ],
+        [
+            "tophad_phi"
+        ], 
+        [
+            "toplep_m"
+        ],
+        [
+            "toplep_pt"
+        ],
+        [
+            "toplep_eta"
+        ],
+        [
+            "toplep_phi"
+        ],
+        [
+            "chi2"
+        ],
 	[
 	    "Jet",
 	    ["pt", "eta", "phi", "mass"]
@@ -91,7 +124,38 @@
 	[
 	    "MET",
 	    ["pt", "phi"]
-	]
+	],
+        [
+            "TopH"
+            ["pt","phi","eta","mass"]
+        ],
+        [
+            "TopL"
+            ["pt","phi","eta","mass"]
+        ],
+        [
+            "GenTopPos"
+            ["pt","phi","eta","mass"]
+        ],
+        [
+            "GenTopNeg"
+            ["pt","phi","eta","mass"]
+        ],
+        [
+            "Neutrino1"
+            ["pt","phi","eta","mass"]
+        ],
+        [
+            "Neutrino2"
+            ["pt","phi","eta","mass"]
+        ],
+        [
+            "GenNeutrino"
+            ["pt","phi","eta","mass"]
+        ]
+
+
+
     ],
     "apply_met_filters": true,
     "mc_lumifactors": "$CONFDIR/mc_lumi_factors_2018.json"
@@ -127,6 +191,7 @@
     "hem_cut_if_jet": false,
 
     "met_min_met": 20,
+    "mass_min": 20,
 
     "hists": "$CONFDIR/test_histograms.json",
 }

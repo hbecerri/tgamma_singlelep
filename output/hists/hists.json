@@ -1,0 +1,286 @@
+[
+    [
+        [
+            "Before cuts",
+            "METphi"
+        ],
+        [
+            "Before cuts",
+            "METpt"
+        ],
+        [
+            "Before cuts",
+            "leading_muon_pt"
+        ],
+        [
+            "Before cuts",
+            "leading_photon_pt"
+        ],
+        [
+            "Trigger",
+            "leading_electron_pt"
+        ],
+        [
+            "Before cuts",
+            "leading_electron_pt"
+        ],
+        [
+            "Before cuts",
+            "number_of_jets"
+        ],
+        [
+            "Trigger",
+            "leading_muon_pt"
+        ],
+        [
+            "Trigger",
+            "number_of_jets"
+        ],
+        [
+            "Trigger",
+            "leading_photon_pt"
+        ],
+        [
+            "Trigger",
+            "METphi"
+        ],
+        [
+            "Trigger",
+            "METpt"
+        ],
+        [
+            "MET filters",
+            "leading_electron_pt"
+        ],
+        [
+            "MET filters",
+            "leading_muon_pt"
+        ],
+        [
+            "oneLepton",
+            "leading_electron_pt"
+        ],
+        [
+            "MET filters",
+            "METphi"
+        ],
+        [
+            "MET filters",
+            "number_of_jets"
+        ],
+        [
+            "oneLepton",
+            "leading_photon_pt"
+        ],
+        [
+            "oneLepton",
+            "number_of_jets"
+        ],
+        [
+            "MET filters",
+            "leading_photon_pt"
+        ],
+        [
+            "oneLepton",
+            "METpt"
+        ],
+        [
+            "oneLepton",
+            "METphi"
+        ],
+        [
+            "oneLepton",
+            "leading_muon_pt"
+        ],
+        [
+            "atLeastOnePhoton",
+            "leading_electron_pt"
+        ],
+        [
+            "MET filters",
+            "METpt"
+        ],
+        [
+            "atLeastOnePhoton",
+            "leading_muon_pt"
+        ],
+        [
+            "atLeastOnePhoton",
+            "leading_photon_pt"
+        ],
+        [
+            "atLeastOnePhoton",
+            "number_of_jets"
+        ],
+        [
+            "atLeastOnePhoton",
+            "METpt"
+        ],
+        [
+            "atLeastOnePhoton",
+            "METphi"
+        ],
+        [
+            "atLeastOnePhoton",
+            "mlg"
+        ],
+        [
+            "atLeastOnePhoton",
+            "number_of_bjets"
+        ],
+        [
+            "atLeast2jets",
+            "leading_muon_pt"
+        ],
+        [
+            "atLeast2jets",
+            "leading_electron_pt"
+        ],
+        [
+            "atLeast2jets",
+            "number_of_jets"
+        ],
+        [
+            "atLeast2jets",
+            "leading_photon_pt"
+        ],
+        [
+            "atLeast2jets",
+            "mlg"
+        ],
+        [
+            "atLeast2jets",
+            "METpt"
+        ],
+        [
+            "atLeast2jets",
+            "number_of_bjets"
+        ],
+        [
+            "atLeast2jets",
+            "METphi"
+        ],
+        [
+            "Req MET",
+            "leading_electron_pt"
+        ],
+        [
+            "Req MET",
+            "leading_muon_pt"
+        ],
+        [
+            "Req MET",
+            "leading_photon_pt"
+        ],
+        [
+            "Req MET",
+            "number_of_jets"
+        ],
+        [
+            "Req MET",
+            "number_of_bjets"
+        ],
+        [
+            "Req MET",
+            "mlg"
+        ],
+        [
+            "Req MET",
+            "METpt"
+        ],
+        [
+            "Req MET",
+            "METphi"
+        ],
+        [
+            "atLeast1bjet",
+            "leading_electron_pt"
+        ],
+        [
+            "atLeast1bjet",
+            "leading_muon_pt"
+        ],
+        [
+            "atLeast1bjet",
+            "leading_photon_pt"
+        ],
+        [
+            "atLeast1bjet",
+            "number_of_jets"
+        ],
+        [
+            "atLeast1bjet",
+            "number_of_bjets"
+        ],
+        [
+            "atLeast1bjet",
+            "mlg"
+        ],
+        [
+            "atLeast1bjet",
+            "METpt"
+        ],
+        [
+            "atLeast1bjet",
+            "METphi"
+        ]
+    ],
+    [
+        "Before cuts_METphi.root",
+        "Before cuts_METpt.root",
+        "Before cuts_leading_muon_pt.root",
+        "Before cuts_leading_photon_pt.root",
+        "Trigger_leading_electron_pt.root",
+        "Before cuts_leading_electron_pt.root",
+        "Before cuts_number_of_jets.root",
+        "Trigger_leading_muon_pt.root",
+        "Trigger_number_of_jets.root",
+        "Trigger_leading_photon_pt.root",
+        "Trigger_METphi.root",
+        "Trigger_METpt.root",
+        "MET filters_leading_electron_pt.root",
+        "MET filters_leading_muon_pt.root",
+        "oneLepton_leading_electron_pt.root",
+        "MET filters_METphi.root",
+        "MET filters_number_of_jets.root",
+        "oneLepton_leading_photon_pt.root",
+        "oneLepton_number_of_jets.root",
+        "MET filters_leading_photon_pt.root",
+        "oneLepton_METpt.root",
+        "oneLepton_METphi.root",
+        "oneLepton_leading_muon_pt.root",
+        "atLeastOnePhoton_leading_electron_pt.root",
+        "MET filters_METpt.root",
+        "atLeastOnePhoton_leading_muon_pt.root",
+        "atLeastOnePhoton_leading_photon_pt.root",
+        "atLeastOnePhoton_number_of_jets.root",
+        "atLeastOnePhoton_METpt.root",
+        "atLeastOnePhoton_METphi.root",
+        "atLeastOnePhoton_mlg.root",
+        "atLeastOnePhoton_number_of_bjets.root",
+        "atLeast2jets_leading_muon_pt.root",
+        "atLeast2jets_leading_electron_pt.root",
+        "atLeast2jets_number_of_jets.root",
+        "atLeast2jets_leading_photon_pt.root",
+        "atLeast2jets_mlg.root",
+        "atLeast2jets_METpt.root",
+        "atLeast2jets_number_of_bjets.root",
+        "atLeast2jets_METphi.root",
+        "Req MET_leading_electron_pt.root",
+        "Req MET_leading_muon_pt.root",
+        "Req MET_leading_photon_pt.root",
+        "Req MET_number_of_jets.root",
+        "Req MET_number_of_bjets.root",
+        "Req MET_mlg.root",
+        "Req MET_METpt.root",
+        "Req MET_METphi.root",
+        "atLeast1bjet_leading_electron_pt.root",
+        "atLeast1bjet_leading_muon_pt.root",
+        "atLeast1bjet_leading_photon_pt.root",
+        "atLeast1bjet_number_of_jets.root",
+        "atLeast1bjet_number_of_bjets.root",
+        "atLeast1bjet_mlg.root",
+        "atLeast1bjet_METpt.root",
+        "atLeast1bjet_METphi.root"
+    ]
+]
